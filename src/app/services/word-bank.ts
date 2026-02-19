@@ -10,21 +10,17 @@ export class WordBank
   public matchWords(word: string, buildArea: GuessState[][]): string[]
   {
     const matchedWords: string[] = new Array(word.length);
-    const skipWord: Record<string, boolean> = {};
 
     for(let i = 0; i < buildArea.length; i++)
     {
       const wants = buildArea[i];
       for(const guess of guesses)
       {
-        if(skipWord[guess]) continue;
-
         const guessState = this.validateGuess(word,guess);
 
         if(JSON.stringify(guessState) == JSON.stringify(wants))
         {
           matchedWords[i] = guess;
-          skipWord[guess] = true;
           break;
         }
       }
