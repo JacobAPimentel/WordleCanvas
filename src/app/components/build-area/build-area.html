@@ -5,7 +5,8 @@
         {
             <app-cell 
                 [color]="cell.color" 
-                [letter]="cell.letter"/>
+                [letter]="cell.letter"
+                (click)="cellClick(row,col)" />
         }
     </div>
 }

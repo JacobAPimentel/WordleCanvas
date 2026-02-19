@@ -22,8 +22,18 @@ type CellInfo =
 })
 export class BuildArea 
 {
-  protected area = Array.from({length: 5}, () =>
+  protected area: CellInfo[][] = Array.from({length: 5}, () =>
   {
     return Array.from({length: 6}, () => ({color: Colors.ABSENT, letter: ''}));
   });
+
+  protected cellClick(row: number, col: number): void
+  {
+    const info = this.area[row][col];
+
+    const colors = Object.values(Colors);
+    const curI = colors.indexOf(info.color);
+    
+    info.color = colors[(curI + 1) % colors.length];
+  }
 }
