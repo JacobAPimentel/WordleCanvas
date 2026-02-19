@@ -9,11 +9,18 @@ export class WordBank
 {
   public matchWords(word: string, buildArea: GuessState[][]): string[]
   {
-    const matchedWords: string[] = new Array(word.length);
+    const matchedWords: string[] = new Array(buildArea.length).fill('?????');
 
     for(let i = 0; i < buildArea.length; i++)
     {
       const wants = buildArea[i];
+
+      if(wants.every(state => state === 'CORRECT')) //Correct guess. Cannot continue.
+      {
+        matchedWords[i] = word;
+        break;
+      }
+
       for(const guess of guesses)
       {
         const guessState = this.validateGuess(word,guess);

@@ -1,4 +1,4 @@
-import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, model, OnInit, computed } from '@angular/core';
 import { Cell } from '../cell/cell';
 import { WordBank } from '../../services/word-bank';
 
@@ -17,29 +17,31 @@ type CellInfo =
   templateUrl: './build-area.html',
   styleUrl: './build-area.css',
 })
-export class BuildArea 
+export class BuildArea implements OnInit
 {
-  //TODO: REMOVE
-  protected WordBank = inject(WordBank);
+  public area = model<CellInfo[][]>([]);
 
-  protected area: CellInfo[][] = Array.from({length: 6}, () =>
-  {
-    return Array.from({length: 5}, () => ({state: 'ABSENT', letter: ''}));
-  });
+  ngOnInit(): void {
+    const cellInfos: CellInfo[][] = Array.from({length: 6}, () =>
+    {
+      return Array.from({length: 5}, () => ({state: 'ABSENT', letter: ''}));
+    });
+    this.area.set(cellInfos);
+  }
 
   protected cellClick(row: number, col: number): void
   {
-    const info = this.area[row][col];
+    const info = this.area()[row][col];
 
     const curI = states.indexOf(info.state);
     
     info.state = states[(curI + 1) % states.length];
-    
-    const wants: GuessState[][] = this.area.map(row => row.map(cell => {
+  }
+
+  public getWantedState(): GuessState[][]
+  {
+    return this.area().map(row => row.map(cell => {
       return cell.state;
     }));
-
-    const words = this.WordBank.matchWords("hoist",wants);
-    console.log(words);
   }
 }

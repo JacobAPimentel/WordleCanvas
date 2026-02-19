@@ -16,6 +16,7 @@ const colors = {
     '[style.background-color]': '"var(" + color() + ")"'
   }
 })
+
 export class Cell {
   public state = input.required<GuessState>();
   public letter = input<string>();
