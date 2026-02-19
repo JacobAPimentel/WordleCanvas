@@ -6,6 +6,15 @@
 
 body{
     margin: 0;
-    background-color: var(--color-primary);
-    color: var(--color-text);
+    background-color: var(--color-background);
+}
+
+:root{
+    --color-correct: #538d4e;
+    --color-present: #b59f3b;
+    --color-absent: #3a3a3c;
+
+    @media (prefers-color-scheme: dark) {
+        --color-background: #000000;
+    }
 }
