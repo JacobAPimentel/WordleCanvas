@@ -1,4 +1,11 @@
-import { Component, ChangeDetectionStrategy, input } from '@angular/core';
+import { Component, ChangeDetectionStrategy, input, computed } from '@angular/core';
+import { GuessState } from '../build-area/build-area';
+
+const colors = {
+  ABSENT: '--color-absent',
+  PRESENT: '--color-present',
+  CORRECT: '--color-correct'
+};
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,selector: 'app-cell',
@@ -10,6 +17,8 @@ import { Component, ChangeDetectionStrategy, input } from '@angular/core';
   }
 })
 export class Cell {
-  public color = input.required<string>();
+  public state = input.required<GuessState>();
   public letter = input<string>();
+
+  public color = computed(() => colors[this.state()]);
 }

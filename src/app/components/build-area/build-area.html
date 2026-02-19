@@ -4,7 +4,7 @@
         @for (cell of cells; track $index; let col = $index)
         {
             <app-cell 
-                [color]="cell.color" 
+                [state]="cell.state" 
                 [letter]="cell.letter"
                 (click)="cellClick(row,col)" />
         }

@@ -1,5 +1,6 @@
-import { Component, ChangeDetectionStrategy } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, inject } from '@angular/core';
 import { BuildArea } from '../components/build-area/build-area';
+import { WordBank } from '../services/word-bank';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,selector: 'app-home-page',
@@ -7,6 +8,8 @@ import { BuildArea } from '../components/build-area/build-area';
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
 })
-export class HomePage {
+export class HomePage
+{
+  protected WordBank = inject(WordBank);
 
 }
