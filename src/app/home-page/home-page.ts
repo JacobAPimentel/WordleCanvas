@@ -1,6 +1,10 @@
-import { Component, ChangeDetectionStrategy, OnInit, inject, TemplateRef, ViewChild, viewChild } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, inject, TemplateRef, ViewChild, viewChild, signal, form } from '@angular/core';
 import { BuildArea } from '../components/build-area/build-area';
 import { WordBank } from '../services/word-bank';
+
+type Config = {
+  word: string
+}
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,selector: 'app-home-page',
@@ -14,7 +18,12 @@ export class HomePage
 
   private buildArea = viewChild.required(BuildArea);
 
-  public placeholderClick()
+  protected configModel = signal<Config>({
+    word: ''
+  });
+  protected configForm = form(this.configModel);
+
+  public onGenerate()
   {
     const words = this.wordBank.matchWords('hoist',this.buildArea().getWantedState());
 

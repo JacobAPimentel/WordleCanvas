@@ -1,2 +1,8 @@
 <app-build-area></app-build-area>
-<input type="button" value="PLACEHOLDER" (click)="placeholderClick()">
+<input type="text" 
+    [formField]="configForm.word"
+    placeholder="WORDLE">
+<input type="button" 
+    value="GENERATE WORDS" 
+    (click)="onGenerate()"
+    class="generateButton">
