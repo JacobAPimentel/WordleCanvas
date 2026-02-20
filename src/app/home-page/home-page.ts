@@ -1,6 +1,7 @@
-import { Component, ChangeDetectionStrategy, OnInit, inject, TemplateRef, ViewChild, viewChild, signal, form } from '@angular/core';
+import { Component, ChangeDetectionStrategy, OnInit, inject, TemplateRef, ViewChild, viewChild, signal, effect } from '@angular/core';
 import { BuildArea } from '../components/build-area/build-area';
 import { WordBank } from '../services/word-bank';
+import { form, FormField, maxLength, minLength, pattern, required } from '@angular/forms/signals';
 
 type Config = {
   word: string
@@ -8,7 +9,7 @@ type Config = {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,selector: 'app-home-page',
-  imports: [BuildArea],
+  imports: [BuildArea, FormField],
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
 })
@@ -19,13 +20,28 @@ export class HomePage
   private buildArea = viewChild.required(BuildArea);
 
   protected configModel = signal<Config>({
-    word: ''
+    word: 'TOKEN'
   });
-  protected configForm = form(this.configModel);
-
-  public onGenerate()
+  protected configForm = form(this.configModel, (schemaPath) => 
   {
-    const words = this.wordBank.matchWords('hoist',this.buildArea().getWantedState());
+    required(schemaPath.word);
+    minLength(schemaPath.word,5);
+    maxLength(schemaPath.word,5);
+    pattern(schemaPath.word,/^[a-zA-Z]{5}$/);
+  });
+  
+  protected uppercaseWordField = effect(() => 
+  {
+    const fieldVal = this.configForm.word().value;
+    fieldVal.set(fieldVal().toUpperCase());
+  });
+
+  public onGenerate(event: Event)
+  {
+    event.preventDefault();
+    if(this.configForm.word().invalid()) return;
+
+    const words = this.wordBank.matchWords(this.configForm.word().value(),this.buildArea().getWantedState());
 
     const area = [...this.buildArea().area()];
     for(let row = 0; row < words.length; row++)
@@ -37,5 +53,6 @@ export class HomePage
       }
     }
     this.buildArea().area.set(area);
+    this.buildArea().dirty.set(false);
   }
 }

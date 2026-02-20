@@ -1,8 +1,9 @@
+<h1>Wordle Canvas</h1>
 <app-build-area></app-build-area>
-<input type="text" 
-    [formField]="configForm.word"
-    placeholder="WORDLE">
-<input type="button" 
-    value="GENERATE WORDS" 
-    (click)="onGenerate()"
-    class="generateButton">
+<form (submit)="onGenerate($event)">
+    <input type="text" class="word-input"
+        [formField]="configForm.word">
+    <input type="submit" 
+        value="GENERATE" 
+        class="generate-button">
+</form>

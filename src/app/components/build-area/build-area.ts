@@ -19,6 +19,7 @@ type CellInfo =
 })
 export class BuildArea implements OnInit
 {
+  public dirty = model(false); // if dirty, hides the letters.
   public area = model<CellInfo[][]>([]);
 
   ngOnInit(): void {
@@ -31,6 +32,7 @@ export class BuildArea implements OnInit
 
   protected cellClick(row: number, col: number): void
   {
+    this.dirty.set(true);
     const info = this.area()[row][col];
 
     const curI = states.indexOf(info.state);

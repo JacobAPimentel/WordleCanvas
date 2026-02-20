@@ -5,7 +5,7 @@
         {
             <app-cell 
                 [state]="cell.state" 
-                [letter]="cell.letter"
+                [letter]="dirty() ? '' : cell.letter"
                 (click)="cellClick(row,col)" />
         }
     </div>

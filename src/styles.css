@@ -19,18 +19,49 @@ input[type="button"], input[type="submit"], input[type="reset"] {
 	outline: inherit;
 }
 
+input[type="text"] {
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 1.25rem;
+  color: #555;
+  outline: none;
+
+  &:focus{
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+
+    &:not(.ng-invalid){
+        outline: 2px solid #007bff;
+    }
+  }
+}
+
+input.ng-invalid {
+  outline: 2px solid red;
+  border-radius: 5px;
+}
+
 :root{
     --color-correct: #538d4e;
     --color-present: #b59f3b;
     --color-absent: #3a3a3c;
 
-    --color-button: #818384;
-    --color-button-hover: #757575;
-
     font-family: Arial, Helvetica, sans-serif;
+    color: var(--color-font);
 
     @media (prefers-color-scheme: dark) {
+        --color-button: #818384;
+        --color-button-hover: #757575;
+
         --color-font: #ffffff;
         --color-background: #000000;
+    }
+
+    @media (prefers-color-scheme: light) {
+        --color-button: #d3d6da;
+        --color-button-hover: #c7c9cd;
+
+        --color-font: #000000;
+        --color-background: #ffffff;
     }
 }
