@@ -24,10 +24,10 @@ export class HomePage
   });
   protected configForm = form(this.configModel, (schemaPath) => 
   {
-    required(schemaPath.word);
+    required(schemaPath.word, {message: 'Five letter alphabetic word is required.'});
+    pattern(schemaPath.word,/^[a-zA-Z]{5}$/,{message: 'Needs to be a five letter alphabetic word.'});
     minLength(schemaPath.word,5);
     maxLength(schemaPath.word,5);
-    pattern(schemaPath.word,/^[a-zA-Z]{5}$/);
   });
   
   protected uppercaseWordField = effect(() => 

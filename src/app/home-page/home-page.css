@@ -34,3 +34,7 @@ form{
         background-color: var(--color-button-hover);
     }
 }
+
+.errors{
+    color: red;
+}

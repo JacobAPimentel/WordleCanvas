@@ -7,3 +7,12 @@
         value="GENERATE" 
         class="generate-button">
 </form>
+@if(configForm.word().invalid())
+{
+    <div class="errors">
+        @for(error of configForm.word().errors(); track error)
+        {
+            <span>{{error.message}}</span>
+        }
+    </div>
+}
