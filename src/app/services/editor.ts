@@ -16,15 +16,23 @@ export class Editor
 {
   public wordBank = inject(WordBank);
 
+  public buildArea = signal<CellInfo[][]>(this.defaultArea());
   public selectedState = signal<GuessState>('PRESENT');
   public answer = signal<string>('');
   public dirty = signal<boolean>(false);
-  public buildArea = signal<CellInfo[][]>(
-    Array.from({length: 6}, () =>
+
+  public defaultArea(): CellInfo[][]
+  {
+    return Array.from({length: 6}, () =>
     {
       return Array.from({length: 5}, () => ({state: 'ABSENT', letter: ''}));
-    })
-  );
+    });
+  }
+
+  public resetArea()
+  {
+    this.buildArea.set(this.defaultArea());
+  }
 
   public getWantedState(): GuessState[][]
   {

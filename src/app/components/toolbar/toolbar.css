@@ -16,6 +16,11 @@
 .present {background-color: var(--color-present);}
 .absent {background-color: var(--color-absent); }
 
+.trash{
+    fill: white;
+    width: 40px;
+}
+
 .selected{
     border: solid 2px white;
     transform: scale(1.20)
