@@ -45,6 +45,10 @@ form{
 .sync-today{
     position: absolute;
     left: var(--toolbar-gap);
+
+    & svg{
+        fill: var(--color-font);
+    }
 }
 
 .word-input{

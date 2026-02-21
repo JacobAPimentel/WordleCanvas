@@ -17,11 +17,11 @@
 .absent {background-color: var(--color-absent); }
 
 .trash{
-    fill: white;
+    fill: var(--color-font);
     width: 40px;
 }
 
 .selected{
-    border: solid 2px white;
+    border: solid 2px var(--color-font);
     transform: scale(1.20)
 }
