@@ -2,9 +2,18 @@ import { Component, ChangeDetectionStrategy, OnInit, inject, TemplateRef, ViewCh
 import { BuildArea } from '../components/build-area/build-area';
 import { WordBank } from '../services/word-bank';
 import { form, FormField, maxLength, minLength, pattern, required } from '@angular/forms/signals';
+import { HttpClient } from '@angular/common/http';
 
 type Config = {
   word: string
+}
+
+type WordleInfomation = {
+  id: number,
+  solution: string,
+  print_date: string,
+  days_since_launch: number,
+  editor: string
 }
 
 @Component({
@@ -16,6 +25,7 @@ type Config = {
 export class HomePage
 {
   protected wordBank = inject(WordBank);
+  protected http = inject(HttpClient);
 
   private buildArea = viewChild.required(BuildArea);
 
@@ -54,5 +64,24 @@ export class HomePage
     }
     this.buildArea().area.set(area);
     this.buildArea().dirty.set(false);
+  }
+
+  public getTodayAnswer()
+  {
+    const date = new Date();
+    const YYYYMMDD = [date.getFullYear(),
+                     (date.getMonth() + 1).toString().padStart(2,'0'),
+                     date.getDate().toString().padStart(2,'0')].join('-');
+                     
+    this.http.get<WordleInfomation>(`/nyt/svc/wordle/v2/${YYYYMMDD}.json`).subscribe({
+      next: (response) => 
+      {
+        this.configForm.word().value.set(response.solution);
+      },
+      error: (error) => 
+      {
+        console.error(error);
+      }
+    });
   }
 }

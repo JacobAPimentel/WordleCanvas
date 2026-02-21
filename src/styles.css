@@ -9,7 +9,7 @@ body{
     background-color: var(--color-background);
 }
 
-input[type="button"], input[type="submit"], input[type="reset"] {
+input[type="submit"], input[type="reset"] {
 	background: none;
 	color: inherit;
 	border: none;
@@ -17,6 +17,17 @@ input[type="button"], input[type="submit"], input[type="reset"] {
 	font: inherit;
 	cursor: pointer;
 	outline: inherit;
+}
+
+.img-button{
+    all: unset;
+    box-sizing: border-box;
+    cursor: pointer;
+
+    & > img,
+    & > svg {
+        display: block;
+    }
 }
 
 input[type="text"] {
