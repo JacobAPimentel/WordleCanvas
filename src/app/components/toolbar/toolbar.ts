@@ -10,7 +10,7 @@ import { LowerCasePipe, NgClass } from '@angular/common';
 })
 export class Toolbar 
 {
-  protected readonly colorPickers: GuessState[] = ['CORRECT','PRESENT','ABSENT'];
+  public readonly colorPickers: GuessState[] = ['CORRECT','PRESENT','ABSENT'];
   protected editor = inject(Editor);
 
   colorPicked(state: GuessState)

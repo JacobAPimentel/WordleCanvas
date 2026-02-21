@@ -23,6 +23,10 @@ type WordleInfomation = {
   imports: [BuildArea, FormField, Toolbar],
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
+  host: {
+    ['tabindex']: '-1', //Make the host focusable
+    '(keydown)': 'processKeydown($event)'
+  }
 })
 export class HomePage
 {
@@ -71,5 +75,19 @@ export class HomePage
         console.error(error);
       }
     });
+  }
+
+  public toolbar = viewChild.required(Toolbar);
+  processKeydown(event: KeyboardEvent)
+  {
+    const target = event.target as HTMLElement;
+    if(target.tagName === 'INPUT') return;
+
+    const num = parseInt(event.key);
+    if(num && 0 < num && num <= 3)
+    {
+      const state = this.toolbar().colorPickers[num - 1];
+      this.editor.selectedState.set(state);
+    }
   }
 }
