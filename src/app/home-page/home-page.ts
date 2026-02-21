@@ -4,6 +4,7 @@ import { WordBank } from '../services/word-bank';
 import { form, FormField, maxLength, minLength, pattern, required } from '@angular/forms/signals';
 import { HttpClient } from '@angular/common/http';
 import { Editor } from '../services/editor';
+import { Toolbar } from '../components/toolbar/toolbar';
 
 type Config = {
   answer: string
@@ -19,7 +20,7 @@ type WordleInfomation = {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,selector: 'app-home-page',
-  imports: [BuildArea, FormField],
+  imports: [BuildArea, FormField, Toolbar],
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
 })

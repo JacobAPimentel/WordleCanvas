@@ -1,7 +1,7 @@
 import { Component, ChangeDetectionStrategy, inject, model, OnInit, computed } from '@angular/core';
 import { Cell } from '../cell/cell';
 import { WordBank } from '../../services/word-bank';
-import { Editor, GuessStates } from '../../services/editor';
+import { Editor } from '../../services/editor';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,selector: 'app-build-area',
@@ -17,8 +17,7 @@ export class BuildArea
   {
     this.editor.dirty.set(true);
     const info = this.editor.buildArea()[row][col];
-    const curI = GuessStates.indexOf(info.state);
     
-    info.state = GuessStates[(curI + 1) % GuessStates.length];
+    info.state = this.editor.selectedState();
   }
 }

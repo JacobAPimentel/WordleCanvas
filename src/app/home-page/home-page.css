@@ -1,5 +1,14 @@
-:host{
-    padding: 30px;
+:host{    
+    --toolbar-gap: -75px;
+
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main{
+    width: fit-content;
     display: flex;
     gap: 20px;
     flex-direction: column;
@@ -11,11 +20,27 @@ h1{
     margin: 0;
 }
 
+.editor{
+    position: relative;
+    & app-toolbar{
+        position: absolute;
+        left: var(--toolbar-gap);
+    }
+}
+
 form{
+    width: 100%;
+
     display: flex;
     align-items: center;
+    position: relative;
 
     gap: 15px
+}
+
+.sync-today{
+    position: absolute;
+    left: var(--toolbar-gap);
 }
 
 .word-input{
@@ -23,16 +48,14 @@ form{
     text-align: center;
 }
 
-.generate-button{
+input[type="submit"] {
+    flex: 1;
     padding: 12px;
     font-size: 1.5rem;
     background-color: var(--color-button);
 
     font-weight: bold;
     color: var(--color-font);
-    &:hover{
-        background-color: var(--color-button-hover);
-    }
 }
 
 .errors{

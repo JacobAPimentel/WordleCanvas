@@ -16,8 +16,9 @@ export class Editor
 {
   public wordBank = inject(WordBank);
 
-  public dirty = signal<boolean>(false);
+  public selectedState = signal<GuessState>('PRESENT');
   public answer = signal<string>('');
+  public dirty = signal<boolean>(false);
   public buildArea = signal<CellInfo[][]>(
     Array.from({length: 6}, () =>
     {

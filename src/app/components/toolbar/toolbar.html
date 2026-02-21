@@ -1,0 +1,9 @@
+@for(state of colorPickers; track state)
+{
+    @let stateClass = state | lowercase;
+    <button class="circle"
+            [class.selected]="editor.selectedState() === state"
+            [ngClass]="stateClass"
+            (click)="colorPicked(state)"> 
+    </button>
+}

@@ -1,7 +1,7 @@
 :host{
     display: flex;
-    width: 52px;
-    height: 52px;
+    width: var(--cell-size);
+    height: var(--cell-size);
 
     align-items: center;
     justify-content: center;
