@@ -1,15 +1,7 @@
 import { Component, ChangeDetectionStrategy, inject, model, OnInit, computed } from '@angular/core';
 import { Cell } from '../cell/cell';
 import { WordBank } from '../../services/word-bank';
-
-const states = ['ABSENT','PRESENT','CORRECT'] as const
-export type GuessState = typeof states[number]
-
-type CellInfo =
-{
-  letter?: string,
-  state: GuessState
-}
+import { Editor, GuessStates } from '../../services/editor';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,selector: 'app-build-area',
@@ -17,33 +9,16 @@ type CellInfo =
   templateUrl: './build-area.html',
   styleUrl: './build-area.css',
 })
-export class BuildArea implements OnInit
+export class BuildArea
 {
-  public dirty = model(false); // if dirty, hides the letters.
-  public area = model<CellInfo[][]>([]);
-
-  ngOnInit(): void {
-    const cellInfos: CellInfo[][] = Array.from({length: 6}, () =>
-    {
-      return Array.from({length: 5}, () => ({state: 'ABSENT', letter: ''}));
-    });
-    this.area.set(cellInfos);
-  }
+  protected editor = inject(Editor);
 
   protected cellClick(row: number, col: number): void
   {
-    this.dirty.set(true);
-    const info = this.area()[row][col];
-
-    const curI = states.indexOf(info.state);
+    this.editor.dirty.set(true);
+    const info = this.editor.buildArea()[row][col];
+    const curI = GuessStates.indexOf(info.state);
     
-    info.state = states[(curI + 1) % states.length];
-  }
-
-  public getWantedState(): GuessState[][]
-  {
-    return this.area().map(row => row.map(cell => {
-      return cell.state;
-    }));
+    info.state = GuessStates[(curI + 1) % GuessStates.length];
   }
 }

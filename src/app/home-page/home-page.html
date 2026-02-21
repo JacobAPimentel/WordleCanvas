@@ -8,15 +8,15 @@
         </svg>
    </button>
     <input type="text" class="word-input"
-        [formField]="configForm.word">
+        [formField]="configForm.answer">
     <input type="submit" 
         value="GENERATE" 
         class="generate-button">
 </form>
-@if(configForm.word().invalid())
+@if(configForm.answer().invalid())
 {
     <div class="errors">
-        @for(error of configForm.word().errors(); track error)
+        @for(error of configForm.answer().errors(); track error)
         {
             <span>{{error.message}}</span>
         }

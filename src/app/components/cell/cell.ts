@@ -1,5 +1,5 @@
 import { Component, ChangeDetectionStrategy, input, computed } from '@angular/core';
-import { GuessState } from '../build-area/build-area';
+import { GuessState } from '../../services/editor';
 
 const colors = {
   ABSENT: '--color-absent',

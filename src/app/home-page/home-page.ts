@@ -3,9 +3,10 @@ import { BuildArea } from '../components/build-area/build-area';
 import { WordBank } from '../services/word-bank';
 import { form, FormField, maxLength, minLength, pattern, required } from '@angular/forms/signals';
 import { HttpClient } from '@angular/common/http';
+import { Editor } from '../services/editor';
 
 type Config = {
-  word: string
+  answer: string
 }
 
 type WordleInfomation = {
@@ -25,45 +26,31 @@ type WordleInfomation = {
 export class HomePage
 {
   protected wordBank = inject(WordBank);
+  protected editor = inject(Editor);
   protected http = inject(HttpClient);
 
-  private buildArea = viewChild.required(BuildArea);
-
   protected configModel = signal<Config>({
-    word: 'TOKEN'
+    answer: 'TOKEN'
   });
   protected configForm = form(this.configModel, (schemaPath) => 
   {
-    required(schemaPath.word, {message: 'Five letter alphabetic word is required.'});
-    pattern(schemaPath.word,/^[a-zA-Z]{5}$/,{message: 'Needs to be a five letter alphabetic word.'});
-    minLength(schemaPath.word,5);
-    maxLength(schemaPath.word,5);
+    required(schemaPath.answer, {message: 'Five letter alphabetic word is required.'});
+    pattern(schemaPath.answer,/^[a-zA-Z]{5}$/,{message: 'Needs to be a five letter alphabetic word.'});
+    minLength(schemaPath.answer,5);
+    maxLength(schemaPath.answer,5);
   });
   
   protected uppercaseWordField = effect(() => 
   {
-    const fieldVal = this.configForm.word().value;
+    const fieldVal = this.configForm.answer().value;
     fieldVal.set(fieldVal().toUpperCase());
   });
 
   public onGenerate(event: Event)
   {
     event.preventDefault();
-    if(this.configForm.word().invalid()) return;
-
-    const words = this.wordBank.matchWords(this.configForm.word().value(),this.buildArea().getWantedState());
-
-    const area = [...this.buildArea().area()];
-    for(let row = 0; row < words.length; row++)
-    {
-      const word = words[row];
-      for(let col = 0; col < word.length; col++)
-      {
-        area[row][col].letter = word[col];
-      }
-    }
-    this.buildArea().area.set(area);
-    this.buildArea().dirty.set(false);
+    if(this.configForm.answer().invalid()) return;
+    this.editor.findGuesses(this.configForm.answer().value());
   }
 
   public getTodayAnswer()
@@ -76,7 +63,7 @@ export class HomePage
     this.http.get<WordleInfomation>(`/nyt/svc/wordle/v2/${YYYYMMDD}.json`).subscribe({
       next: (response) => 
       {
-        this.configForm.word().value.set(response.solution);
+        this.configForm.answer().value.set(response.solution);
       },
       error: (error) => 
       {

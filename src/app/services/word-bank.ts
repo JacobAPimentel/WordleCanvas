@@ -1,6 +1,6 @@
 import { Injectable, signal } from '@angular/core';
 import guesses from '../../resources/guesses.json';
-import { GuessState } from '../components/build-area/build-area';
+import { GuessState } from './editor';
 
 @Injectable({
   providedIn: 'root',
