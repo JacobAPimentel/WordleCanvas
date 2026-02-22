@@ -11,7 +11,7 @@
 }
 
 .main{
-    width: fit-content;
+    width: calc(var(--cell-size) * 5 + var(--cell-gap) * 4);
     display: flex;
     gap: 20px;
     flex-direction: column;
@@ -24,11 +24,22 @@ h1{
 }
 
 .editor{
+    display: flex;
+    flex-direction: column;
     position: relative;
-    & app-toolbar{
-        position: absolute;
-        top: 10px;
-        left: var(--toolbar-gap);
+
+    @media(width >= 500px)
+    {
+        & app-toolbar{
+            position: absolute;
+            top: 10px;
+            left: var(--toolbar-gap);
+        }
+    }
+    @media(width < 500px)
+    {
+        gap: 20px;
+        /* Rest of media is in toolbar.css*/
     }
 }
 
@@ -39,28 +50,31 @@ form{
     align-items: center;
     position: relative;
 
-    gap: 15px
+    gap: 15px;
 }
 
 .sync-today{
-    position: absolute;
-    left: var(--toolbar-gap);
-
     & svg{
         fill: var(--color-font);
+    }
+
+    @media(width >= 500px)
+    {
+        position: absolute;
+        left: var(--toolbar-gap);
     }
 }
 
 .word-input{
-    width: 7rem;
+    flex: 1 1 6rem;
+    min-width: 0;
     text-align: center;
 }
 
 input[type="submit"] {
-    flex: 1;
     padding: 12px;
     font-size: 1.5rem;
-    background-color: var(--color-button);
+    background-color: var(--color-correct);
 
     font-weight: bold;
     color: var(--color-font);

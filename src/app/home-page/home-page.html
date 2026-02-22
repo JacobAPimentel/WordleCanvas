@@ -1,8 +1,8 @@
 <div class="main">
     <h1>Wordle Canvas</h1>
     <div class="editor">
-        <app-toolbar />
         <app-build-area />
+        <app-toolbar />
     </div>
     <form (submit)="onGenerate($event)">
         <button type="button" 
@@ -17,7 +17,7 @@
                 </svg>
         </button>
         <input type="text" class="word-input" [formField]="configForm.answer">
-        <input type="submit" value="GENERATE" >
+        <input type="submit" value="SOLVE" >
     </form>
     @if(configForm.answer().invalid())
     {

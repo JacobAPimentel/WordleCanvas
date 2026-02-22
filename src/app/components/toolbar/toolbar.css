@@ -2,7 +2,16 @@
     --tool-size: 40px;
     display: flex;
     flex-direction: column;
-    gap: 15px
+    gap: 15px;
+
+    @media(width < 500px)
+    {
+        flex-direction: row;
+
+        & :has(.trash){
+            margin-left: auto;
+        }
+    }
 }
 
 .circle{

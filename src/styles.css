@@ -78,17 +78,11 @@ input.ng-invalid {
     color: var(--color-font);
 
     @media (prefers-color-scheme: dark) {
-        --color-button: #818384;
-        --color-button-hover: #757575;
-
         --color-font: #ffffff;
         --color-background: #000000;
     }
 
     @media (prefers-color-scheme: light) {
-        --color-button: #d3d6da;
-        --color-button-hover: #c7c9cd;
-
         --color-font: #000000;
         --color-background: #ffffff;
     }
