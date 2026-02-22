@@ -77,7 +77,7 @@ input[type="submit"] {
     background-color: var(--color-correct);
 
     font-weight: bold;
-    color: var(--color-font);
+    color: white;
 }
 
 .errors{

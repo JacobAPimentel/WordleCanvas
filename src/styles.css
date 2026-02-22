@@ -78,12 +78,12 @@ input.ng-invalid {
     color: var(--color-font);
 
     @media (prefers-color-scheme: dark) {
-        --color-font: #ffffff;
+        --color-font: white;
         --color-background: #000000;
     }
 
     @media (prefers-color-scheme: light) {
         --color-font: #000000;
-        --color-background: #ffffff;
+        --color-background: white;
     }
 }
