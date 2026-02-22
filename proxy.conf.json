@@ -1,6 +1,6 @@
 {
     "/nyt": {
-        "target": "https://www.nytimes.com",
+        "target": "https://wordle-canvas-proxy.jacobapimentel.workers.dev",
         "secure": true,
         "changeOrigin": true,
         "logLevel": "debug",

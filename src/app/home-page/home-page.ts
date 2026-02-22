@@ -8,6 +8,7 @@ import { Toolbar } from '../components/toolbar/toolbar';
 import {finalize } from 'rxjs/operators';
 import { timer } from 'rxjs';
 import { DebounceClickDirective } from '../directives/click-debounce';
+import { environment } from '../../environments/environment';
 
 type Config = {
   answer: string
@@ -81,7 +82,7 @@ export class HomePage
                      date.getDate().toString().padStart(2,'0')].join('-');
 
     const loadingTimer = timer(300).subscribe(() => this.loading.set(true));
-    this.http.get<WordleInfomation>(`/nyt/svc/wordle/v2/${YYYYMMDD}.json`).pipe(
+    this.http.get<WordleInfomation>(`${environment.apiUrl}/?date=${YYYYMMDD}`).pipe(
       finalize(() => 
       {
         loadingTimer.unsubscribe();
