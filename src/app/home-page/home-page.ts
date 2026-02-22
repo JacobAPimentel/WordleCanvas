@@ -1,10 +1,13 @@
-import { Component, ChangeDetectionStrategy, OnInit, inject, TemplateRef, ViewChild, viewChild, signal, effect } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject, viewChild, signal, effect } from '@angular/core';
 import { BuildArea } from '../components/build-area/build-area';
 import { WordBank } from '../services/word-bank';
-import { form, FormField, maxLength, minLength, pattern, required } from '@angular/forms/signals';
+import { disabled, form, FormField, maxLength, minLength, pattern, required } from '@angular/forms/signals';
 import { HttpClient } from '@angular/common/http';
 import { Editor } from '../services/editor';
 import { Toolbar } from '../components/toolbar/toolbar';
+import {finalize } from 'rxjs/operators';
+import { timer } from 'rxjs';
+import { DebounceClickDirective } from '../directives/click-debounce';
 
 type Config = {
   answer: string
@@ -20,11 +23,12 @@ type WordleInfomation = {
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,selector: 'app-home-page',
-  imports: [BuildArea, FormField, Toolbar],
+  imports: [BuildArea, FormField, Toolbar, DebounceClickDirective],
   templateUrl: './home-page.html',
   styleUrl: './home-page.css',
   host: {
-    ['tabindex']: '-1', //Make the host focusable
+    '[class.loading]': 'loading()',
+    tabindex: '-1', //Make the host focusable
     '(keydown)': 'processKeydown($event)'
   }
 })
@@ -33,7 +37,9 @@ export class HomePage
   protected wordBank = inject(WordBank);
   protected editor = inject(Editor);
   protected http = inject(HttpClient);
+  protected toolbar = viewChild.required(Toolbar);
 
+  public loading = signal<boolean | undefined>(undefined); // undefined, because we are using [attr.disabled], which consider any non-null value as true.
   protected configModel = signal<Config>({
     answer: 'TOKEN'
   });
@@ -43,6 +49,7 @@ export class HomePage
     pattern(schemaPath.answer,/^[a-zA-Z]{5}$/,{message: 'Needs to be a five letter alphabetic word.'});
     minLength(schemaPath.answer,5);
     maxLength(schemaPath.answer,5);
+    disabled(schemaPath,() => !!this.loading()); //!! to make it into a boolean value.
   });
   
   protected uppercaseWordField = effect(() => 
@@ -64,8 +71,15 @@ export class HomePage
     const YYYYMMDD = [date.getFullYear(),
                      (date.getMonth() + 1).toString().padStart(2,'0'),
                      date.getDate().toString().padStart(2,'0')].join('-');
-                     
-    this.http.get<WordleInfomation>(`/nyt/svc/wordle/v2/${YYYYMMDD}.json`).subscribe({
+
+    const loadingTimer = timer(300).subscribe(() => this.loading.set(true));
+    this.http.get<WordleInfomation>(`/nyt/svc/wordle/v2/${YYYYMMDD}.json`).pipe(
+      finalize(() => 
+      {
+        loadingTimer.unsubscribe();
+        this.loading.set(undefined);
+      })
+    ).subscribe({
       next: (response) => 
       {
         this.configForm.answer().value.set(response.solution);
@@ -73,11 +87,11 @@ export class HomePage
       error: (error) => 
       {
         console.error(error);
+        this.configForm.answer().value.set('?????');
       }
     });
   }
 
-  public toolbar = viewChild.required(Toolbar);
   processKeydown(event: KeyboardEvent)
   {
     const target = event.target as HTMLElement;

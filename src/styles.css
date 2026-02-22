@@ -25,6 +25,12 @@ button, input[type="submit"] {
     &:hover{
         filter: brightness(80%);
     }
+    &:disabled{
+        filter: brightness(50%);
+    }
+}
+:disabled{
+    cursor: inherit;
 }
 
 .img-button{
@@ -32,6 +38,10 @@ button, input[type="submit"] {
     & > svg {
         display: block;
     }
+}
+
+.loading{
+    cursor: wait;
 }
 
 input[type="text"] {
