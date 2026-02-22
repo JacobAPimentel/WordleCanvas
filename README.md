@@ -1,59 +1,22 @@
-# WordleCanvas
+![Made with Angular](https://img.shields.io/badge/angular-%23DD0031.svg?style=for-the-badge&logo=angular&logoColor=white)
+# Wordle Canvas
+[Wordle Canvas](https://jacobapimentel.github.io/WordleCanvas/) is a website where you can paint Wordle results. Color the tiles and generate the guesses that correspond with the painted pattern!
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.2.2.
+## User Guide
+The site gives you a 5x6 grid that mimics the Wordle play area.
+Use the toolbar to choose a color:
+- Green, Yellow, or Black to paint tiles.
+- The trash can clears the entire board.
+- The cloud sync button fetches today's Wordle answer directly from nytimes.com.
+- You can also type your own answer, as long as it is five alphabetical characters.
 
-## Development server
+Once the grid reflects your desired pattern, click SOLVE to compute matching guesses.
+- If no guesses can be determined for a row, it will display as "?????"
 
-To start a local development server, run:
+There are also keyboard shortcuts to quickly switch between the colors:
+- 1 = green
+- 2 = yellow
+- 3 = black
 
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Website Screenshot
+<img src="https://i.imgur.com/wCm5gdL.png" alt="Screenshot of the website" style="width:500px">
