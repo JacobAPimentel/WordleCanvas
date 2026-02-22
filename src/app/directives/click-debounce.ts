@@ -4,7 +4,7 @@ import { timer } from 'rxjs';
 @Directive({
   selector: '[appDebounceClick]',
   host: {
-    '(click)': 'clickEvent($event)'
+    '(click)': 'clickEvent()'
   }
 })
 export class DebounceClickDirective
@@ -14,7 +14,13 @@ export class DebounceClickDirective
   public debounceTime = input(300);
   public debounceClick = output();
 
-  clickEvent(event: MouseEvent) 
+  /**
+   * If there is no debounce, enable the debounce and emit debounceClick() signal.
+   * 
+   * If there is a debounce, do nothing.
+   * 
+   */
+  public clickEvent(): void
   {
     if(this.debounced) return;
     this.debounced = true;

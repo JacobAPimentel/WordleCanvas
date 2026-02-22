@@ -1,6 +1,5 @@
-import { Component, ChangeDetectionStrategy, inject, model, OnInit, computed } from '@angular/core';
+import { Component, ChangeDetectionStrategy, inject } from '@angular/core';
 import { Cell } from '../cell/cell';
-import { WordBank } from '../../services/word-bank';
 import { Editor } from '../../services/editor';
 
 @Component({
@@ -13,6 +12,16 @@ export class BuildArea
 {
   protected editor = inject(Editor);
 
+  /**
+   * Cell was clicked; update the cell's state.
+   * 
+   * @param row - The cell's row that was clicked
+   * @param col - The cell's col that was clicked.
+   * 
+   * @remarks
+   * Will set the editor dirty value to "true",
+   * this will unrender all of the letters on the build area.
+   */
   protected cellClick(row: number, col: number): void
   {
     this.editor.dirty.set(true);

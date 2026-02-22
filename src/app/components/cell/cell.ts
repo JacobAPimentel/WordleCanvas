@@ -17,7 +17,8 @@ const colors = {
   }
 })
 
-export class Cell {
+export class Cell 
+{
   public state = input.required<GuessState>();
   public letter = input<string>();
 

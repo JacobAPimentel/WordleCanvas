@@ -21,6 +21,9 @@ export class Editor
   public answer = signal<string>('');
   public dirty = signal<boolean>(false);
 
+  /**
+   * @returns the default build area (empty letters, all absent states)
+   */
   public defaultArea(): CellInfo[][]
   {
     return Array.from({length: 6}, () =>
@@ -29,19 +32,31 @@ export class Editor
     });
   }
 
-  public resetArea()
+  /**
+   * Sets the build area to the default area.
+   */
+  public resetArea(): void
   {
     this.buildArea.set(this.defaultArea());
   }
 
+  /**
+   * @returns the wanted GuessState of the build area.
+   */
   public getWantedState(): GuessState[][]
   {
-    return this.buildArea().map(row => row.map(cell => {
+    return this.buildArea().map(row => row.map(cell => 
+    {
       return cell.state;
     }));
   }
 
-  public findGuesses(answer: string)
+  /**
+   * Find the guesses that will result in the wanted build state.
+   * 
+   * @param answer - the answer that is being evaulated.
+   */
+  public findGuesses(answer: string): void
   {
     const words = this.wordBank.matchWords(answer,this.getWantedState());
 

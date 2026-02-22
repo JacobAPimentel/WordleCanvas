@@ -58,14 +58,22 @@ export class HomePage
     fieldVal.set(fieldVal().toUpperCase());
   });
 
-  public onGenerate(event: Event)
+  /**
+   * Generates the guesses.
+   * 
+   * @param event - The submit event
+   */
+  public onGenerate(event: SubmitEvent): void
   {
     event.preventDefault();
     if(this.configForm.answer().invalid()) return;
     this.editor.findGuesses(this.configForm.answer().value());
   }
 
-  public getTodayAnswer()
+  /**
+   * Retrieve today's Wordle answer from nytime
+   */
+  public getTodayAnswer(): void
   {
     const date = new Date();
     const YYYYMMDD = [date.getFullYear(),
@@ -92,7 +100,12 @@ export class HomePage
     });
   }
 
-  processKeydown(event: KeyboardEvent)
+  /**
+   * If the user types 1, 2, or 3, select a toolbar's color state.
+   * 
+   * @param event - the KeyboardEvent
+   */
+  protected processKeydown(event: KeyboardEvent): void
   {
     const target = event.target as HTMLElement;
     if(target.tagName === 'INPUT') return;
